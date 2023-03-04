@@ -22,19 +22,33 @@ def compute_height(n, parents):
 def main():
     input_string = input().strip()
     input_values = input_string.split('\\r\\n')
-
-    if "I" in input_values:
+    
+    # Check if input has correct format
+    if len(input_values) < 2:
+        print("Error: input is not well-formed")
+        return
+    
+    if input_values[0] == "I":
+        if len(input_values) < 3:
+            print("Error: input is not well-formed")
+            return
         n = int(input_values[1])
         parents = list(map(int, input_values[2].split()))
-
-    elif "F" in input_values:
-        filename = input_string.split('\\r\\n')[1].strip()
+    elif input_values[0] == "F":
+        if len(input_values) < 2:
+            print("Error: input is not well-formed")
+            return
+        filename = input_values[1]
         testfolder = "./test/" + filename
-
+        
         with open(testfolder, mode='r') as file:
             text = file.read().strip()
-            n, parents = int(text.split('\\r\\n')[0]), list(map(int, text.split('\\r\\n')[1].split()))
-
+            n, parents = int(text.split('\n')[0]), list(map(int, text.split('\n')[1].split()))
+    else:
+        print("Error: invalid input")
+        return
+    
+    sys.setrecursionlimit(10**7)
     height = compute_height(n, parents)
     print(height)
     
