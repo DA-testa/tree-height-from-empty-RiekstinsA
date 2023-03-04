@@ -1,47 +1,38 @@
-# python3
-
-import sys
-import threading
-
-
 def compute_height(n, parents):
+    if n == 0:
+        return 0
 
-    adj_list = [[] for _ in range(n)]
+    depths = [0] * n
+
+    root = None
     for i in range(n):
-        parent = parents[i]
-        if parent == -1:
+        if parents[i] == -1:
             root = i
         else:
-            adj_list[parent].append(i)
+            depths[i] = depths[parents[i]] + 1
 
-    def height(node):
-        if not adj_list[node]:
-            return 1
-        else:
-            return 1 + max([height(child) for child in adj_list[node]])
-
-    return height(root)
-
+    max_depth = max(depths)
+    return max_depth
 
 def main():
     input_string = input().strip()
     input_values = input_string.split('\\r\\n')
-    n, parents = None, None
 
     if "I" in input_values:
         n = int(input_values[1])
         parents = list(map(int, input_values[2].split()))
 
     elif "F" in input_values:
-        filename = input_string.split('\\r\\n')[1]
+        filename = input_string.split('\\r\\n')[1].strip()
         testfolder = "./test/" + filename
-        
+
         with open(testfolder, mode='r') as file:
             text = file.read().strip()
-            n, parents = int(text.split('\n')[0]), list(map(int, text.split('\n')[1].split()))
+            n, parents = int(text.split('\\r\\n')[0]), list(map(int, text.split('\\r\\n')[1].split()))
 
-    print(compute_height(n, parents))
-
+    height = compute_height(n, parents)
+    print(height)
+    
 # In Python, the default limit on recursion depth is rather low,
 # so raise it here for this problem. Note that to take advantage
 # of bigger stack, we have to launch the computation in a new thread.
