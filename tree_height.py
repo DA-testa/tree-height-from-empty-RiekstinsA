@@ -25,9 +25,10 @@ def compute_height(n, parents):
 
 def main():
 
-    input_values = sys.stdin.read().splitlines()
-    n = int(input_values[0])
-    parents = list(map(int, input_values[1].split()))
+    input_string = input().strip()
+    input_values = input_string.split('\r\n')
+    n = int(input_values[1])
+    parents = list(map(int, input_values[2].split()))
 
     print(compute_height(n, parents))
 
