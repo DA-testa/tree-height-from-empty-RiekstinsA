@@ -26,7 +26,7 @@ def compute_height(n, parents):
 def main():
 
     input_string = input().strip()
-    input_values = input_string.split('\r\n')
+    input_values = input_string.split('\\r\\n')
     n = int(input_values[1])
     parents = list(map(int, input_values[2].split()))
 
