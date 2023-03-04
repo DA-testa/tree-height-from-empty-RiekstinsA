@@ -16,22 +16,36 @@ def compute_height(n, parents):
 
     def height(node):
         if not adj_list[node]:
-            # base case: leaf node
             return 1
         else:
             return 1 + max([height(child) for child in adj_list[node]])
 
     return height(root)
 
-def main():
 
+def main():
     input_string = input().strip()
     input_values = input_string.split('\\r\\n')
-    n = int(input_values[1])
-    parents = list(map(int, input_values[2].split()))
+    n, parents = None, None
+
+    if "I" in input_values:
+        n = int(input_values[1])
+        parents = list(map(int, input_values[2].split()))
+
+    elif "F" in input_values:
+        filename = input_string.split('\\r\\n')[1]
+        testfolder = "./test/" + filename
+        
+        with open(testfolder, mode='r') as file:
+            text = file.read().strip()
+            n, parents = int(text.split('\n')[0]), list(map(int, text.split('\n')[1].split()))
 
     print(compute_height(n, parents))
 
-sys.setrecursionlimit(10**7)
-threading.stack_size(2**27)
+# In Python, the default limit on recursion depth is rather low,
+# so raise it here for this problem. Note that to take advantage
+# of bigger stack, we have to launch the computation in a new thread.
+sys.setrecursionlimit(10**7)  # max depth of recursion
+threading.stack_size(2**27)   # new thread will get stack of such size
 threading.Thread(target=main).start()
+main()
