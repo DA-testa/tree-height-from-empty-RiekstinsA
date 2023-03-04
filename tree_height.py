@@ -1,3 +1,8 @@
+# python3
+
+import sys
+import threading
+
 def compute_height(n, parents):
     if n == 0:
         return 0
