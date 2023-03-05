@@ -24,20 +24,28 @@ def compute_height(n, parents):
 
 
 def main():
-    inputstr = input().strip()
-    inputval = inputstr.split('\\r\\n')
+    input_i_f = input()
 
-    if "I" in inputval:
-        n = int(inputval[1])
-        parents = list(map(int, inputval[2].split()))
+    if input_i_f == "I":
+        n = int(input())
+        parents = list(map(int, input().split()))
 
-    elif "F" in inputval:
-        filename = inputstr.split('\\r\\n')[1]
-        testfolder = "./test/" + filename
-        
-        with open(testfolder, mode='r') as file:
-            text = file.read().strip()
-            n, parents = int(text.split('\n')[0]), list(map(int, text.split('\n')[1].split()))
+    elif input_i_f == "F":
+        filename = input()
+        if "a" in filename:
+            print("invalid file name (a)")
+            return
+        try:
+            testfolder = "./test/" + filename
+            with open(testfolder, 'r') as f:
+                n = int(f.readline().strip())
+                parents = list(map(int, f.readline().strip().split()))
+        except FileNotFoundError:
+            print("file not found")
+            return
+    else:
+        print("invalid input type")
+        return
 
     print(compute_height(n, parents))
 
