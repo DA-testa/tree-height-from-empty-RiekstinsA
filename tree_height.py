@@ -24,14 +24,14 @@ def compute_height(nodes, parents):
 
 
 def main():
-    input_i_f = input("I vai F: ")
+    input_i_f = input()
 
     if input_i_f == "I":
         nodes = int(input())
         parents = list(map(int, input().split()))
 
     elif input_i_f == "F":
-        filename = input("file name: ")
+        filename = input()
         if "a" in filename:
             print("invalid file name (a)")
             return
