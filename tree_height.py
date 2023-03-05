@@ -3,9 +3,7 @@
 import sys
 import threading
 
-
 def compute_height(n, parents):
-
     adj_list = [[] for _ in range(n)]
     for i in range(n):
         parent = parents[i]
@@ -13,29 +11,25 @@ def compute_height(n, parents):
             root = i
         else:
             adj_list[parent].append(i)
-
     def max_height(node):
         if not adj_list[node]:
             return 1
         else:
             return 1 + max([max_height(child) for child in adj_list[node]])
-
     return max_height(root)
-
 
 def main():
     inputstr = input().strip()
-    inputval = inputstr.split('\\r\\n')
+    inputval = inputstr.split('\n')
 
-    if "I" in inputval:
+    if "I" in inputval[0]:
         n = int(inputval[1])
         parents = list(map(int, inputval[2].split()))
 
-    elif "F" in inputval:
-        filename = inputstr.split('\\r\\n')[1]
+    elif "F" in inputval[0]:
+        filename = inputval[1].strip()
         testfolder = "./test/" + filename
-
-        with open (testfolder, mode = 'r') as file:
+        with open(testfolder, mode='r') as file:
             text = file.read().strip()
             n, parents = int(text.split('\n')[0]), list(map(int, text.split('\n')[1].split()))
 
